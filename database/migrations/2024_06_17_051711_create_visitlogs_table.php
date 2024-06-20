@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('visitlogs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('visitor_id')->constrained();
-            $table->foreignId('staff_id')->nullable()->constrained();
             $table->string('action'); // e.g., 'check-in', 'check-out', 'appointment-created'
             $table->dateTime('entry_time');
             $table->dateTime('exit_time')->nullable();

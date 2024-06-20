@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Authcontroller;
-use App\Http\Controllers\VisitorController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,12 +17,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/login', [Authcontroller::class, 'login'])->name('login')->middleware('guest');
+Route::get('/', [Authcontroller::class, 'login'])->name('login')->middleware('guest');
 Route::post('loginPost', [Authcontroller::class, 'loginPost'])->name('loginPost');
 
-Route::group(['prefix' => 'visitor', 'middleware' => 'auth'], function () {
-    Route::get('/', [VisitorController::class, 'index'])->name('dashboard');
+Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
+    Route::get('/', [AppointmentController::class, 'dashboard'])->name('dashboard');
+    Route::get('/new-appointment', [AppointmentController::class, 'index'])->name('newappointment');
+    Route::post('/aptstore', [AppointmentController::class, 'store'])->name('appointment.store');
+    Route::get('/getaptByid', [AppointmentController::class, 'getaptByid'])->name('getaptByid');
+    Route::get('/delete_appointment', [AppointmentController::class, 'delete'])->name('delete_appointment');
+    Route::get('/department', [DepartmentController::class, 'index'])->name('department');
+    Route::post('/store', [DepartmentController::class, 'store'])->name('department.store');
+
+
+    Route::get('/staff', [StaffController::class, 'index'])->name('staff');
+    Route::post('/storestaff', [StaffController::class, 'store'])->name('staff.store');
+    Route::get('/delete_staff', [StaffController::class, 'delete'])->name('delete_staff');
+    Route::get('/getstaffByid', [StaffController::class, 'getstaffByid'])->name('getstaffByid');
+
+    Route::post('/profile', [StaffController::class, 'profile'])->name('profile');
 });
-
-
-

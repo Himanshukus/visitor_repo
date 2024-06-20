@@ -8,7 +8,6 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <!-- preloader css -->
-    <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="assets/css/preloader.min.css" type="text/css" />
 
@@ -23,7 +22,6 @@
 </head>
 
 <body>
-    <section class="layout-wrapper">
 
         <div class="auth-page">
             <div class="container-fluid p-0">
@@ -235,17 +233,8 @@
         <script src="assets/libs/feather-icons/feather.min.js"></script>
         <script src="assets/libs/pace-js/pace.min.js"></script>
 
-
-        <!-- Plugins js-->
-        <script src="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-        <script src="assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js">
-        </script>
-
-        <!-- dashboard init -->
-        <script src="assets/js/pages/dashboard.init.js"></script>
-
-        <!-- App js -->
-        <script src="assets/js/app.js"></script>
+        <script src="assets/js/pages/pass-addon.init.js"></script>
+     
         
 
 </body>
