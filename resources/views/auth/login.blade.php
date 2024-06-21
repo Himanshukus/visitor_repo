@@ -78,7 +78,7 @@
                                                 <p class="text-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
-                                            <div class="row mb-4">
+                                            {{-- <div class="row mb-4">
                                                 <div class="col">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" id="remember-check">
@@ -88,7 +88,7 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
+                                            </div> --}}
                                             <div class="mb-3">
                                                 <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In</button>
                                             </div>
@@ -101,7 +101,7 @@
                                     <div class="mt-4 mt-md-5 text-center">
                                         <p class="mb-0">© <script>
                                                 document.write(new Date().getFullYear())
-                                            </script> Minia . Crafted with <i class="mdi mdi-heart text-danger"></i> by BeaconCoders</p>
+                                            </script> with <i class="mdi mdi-heart text-danger"></i> by BeaconCoders</p>
                                     </div>
                                 </div>
                             </div>

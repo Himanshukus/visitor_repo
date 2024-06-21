@@ -3,21 +3,21 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="index.php" class="logo logo-dark">
+                <a href="/" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{url('assets/images/logo-sm.svg')}}" alt="" height="24">
+                        <img src="{{url('assets/images/logo/Seser_APP.png')}}" alt="" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{url('assets/images/logo-sm.svg')}}" alt="" height="24"> <span class="logo-txt">Minia</span>
+                        <img src="{{url('assets/images/logo/Seser_logo_horizontal_purple.png')}}" alt="" height="24"> 
                     </span>
                 </a>
 
-                <a href="index.php" class="logo logo-light">
+                <a href="/" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{url('assets/images/logo-sm.svg')}}" alt="" height="24">
+                        <img src="{{url('assets/images/logo/Seser_APP.png')}}" alt="" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{url('assets/images/logo-sm.svg')}}" alt="" height="24"> <span class="logo-txt">Minia</span>
+                        <img src="{{url('assets/images/logo/Seser_logo_horizontal_purple.png')}}" alt="" height="24"> 
                     </span>
                 </a>
             </div>
@@ -48,10 +48,9 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="apps-contacts-profile.php"><i class="mdi mdi mdi-face-man font-size-16 align-middle me-1"></i> <?php //echo $language["Profile"]; ?></a>
-                    <a class="dropdown-item" href="auth-lock-screen.php"><i class="mdi mdi-lock font-size-16 align-middle me-1"></i> <?php //echo $language["Lock_screen"]; ?> </a>
+                    <a class="dropdown-item" href="{{route('profile')}}"><i class="mdi mdi mdi-face-man font-size-16 align-middle me-1"></i>Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="logout.php"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> <?php //echo $language["Logout"]; ?></a>
+                    <a class="dropdown-item" href="{{route('logout')}}"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
                 </div>
             </div>
 

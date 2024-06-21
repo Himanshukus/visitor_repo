@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visitlogs', function (Blueprint $table) {
+        Schema::create('meetingreponses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('visitor_id')->constrained();
-            $table->string('action'); // e.g., 'check-in', 'check-out', 'appointment-created'
-            $table->dateTime('entry_time');
-            $table->string('visit_date');
-            $table->dateTime('exit_time')->nullable();
+            $table->string('email');
+            $table->unsignedBigInteger('meeting_id');
+            $table->enum('response', ['yes', 'no']);
             $table->timestamps();
+            $table->foreign('meeting_id')->references('id')->on('visitors')->onDelete('cascade');
+
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visitlogs');
+        Schema::dropIfExists('meetingreponses');
     }
 };

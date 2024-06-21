@@ -19,20 +19,32 @@ class AppointmentController extends Controller
     public function dashboard()
     {
         
-       
-        // $data = 'Visitor1';
-        // $qrCodeUrl = 'https://qrcode.tec-it.com/API/QRCode';
-        // $queryParams = [
-        //     'data' => urlencode($data),
-        //     'errorcorrection' => 'M',
-        //     'size' => 'medium',
-        //     'method' => 'Image',
+        // $data = [
+        //     'mail' => 'hkushwaha066@gmail.com',
+        //     'subject' => 'Meeting Invitation',
+        //     'body' => 'You are invited to a meeting.',
+        //     'attachedFile' => 'c:\Users\ABC\Downloads\Untitled design (25) (1).png', 
+        //     'meetingDetails' => [
+        //         'id' => 1,  // This should be the actual meeting ID from your database
+        //         'title' => 'Team Meeting',
+        //         'recipient_name' => 'John Doe',
+        //         'recipient_email' => 'hkushwaha066@gmail.com',
+        //         'date' => '2024-06-25',
+        //         'time' => '10:00 AM',
+        //         'location' => 'Conference Room A',
+        //         'agenda' => 'Discuss project milestones and deadlines',
+        //         'sender_name' => 'Jane Smith'
+        //     ]
         // ];
-        // $qrCodeUrl .= '?' . http_build_query($queryParams);
-        // $response = Http::get($qrCodeUrl);
-        // $imageName = 'qrcode_' . time() . '.png';
-        // $path = public_path('uploads/qrcodes/' . $imageName);
-        // file_put_contents($path, $response->body());
+        
+        // $dd = dispatch(new SendMailjob($data));
+        
+        // if ($dd) {
+        //     echo "send";
+        // } else {
+        //     echo "not send";
+        // }
+        // die("sdfsfsafsafas");
 
         return view('dashboard');
     }
@@ -41,7 +53,14 @@ class AppointmentController extends Controller
     {
         $staff = User::all();
         $data = Visitor::all();
-        return view('appointment.index', compact('staff', 'data'));
+
+        $visitorpurpose = [
+            'appointment' => 'Appointment',
+            'interview' => 'Interview',
+            'servicecall' => 'Servicecall',
+            'clientcustomervisit' => 'Clientcustomervisit',
+        ];
+        return view('appointment.index', compact('staff', 'data', 'visitorpurpose'));
     }
 
     public function store(Request $request)
@@ -105,16 +124,27 @@ class AppointmentController extends Controller
 
         
         $body = "
-        <h2>Password Reset</h2>
+        <h2>Appointment </h2>
         <p>Dear $request->name,</p>";
 
         $email = 'himanshu@beaconcoders.com';
         $senddata['name'] = $request->name;
         $senddata['email'] = $email;
-        $senddata['subject'] = 'Reset Password';
+        $senddata['subject'] = 'Your  Appointment';
         $senddata['body'] = $body;
         $senddata['attachedFile'] = public_path($qrCodePath);
-        // $sendmailres = $this->sendmail($senddata);
+        $senddata['meetingDetails'] = [
+            'id' => $appointment->id,  
+            'title' => 'Team Meeting',
+            'recipient_name' => $request->name,
+            'recipient_email' => 'hkushwaha066@gmail.com',
+            'date' => '2024-06-25',
+            'time' => '10:00 AM',
+            'location' => 'India, Vaishali',
+            'agenda' => 'Discuss project milestones and deadlines',
+            'sender_name' => Auth::user()->name,
+        ];
+        $sendmailres = $this->sendmail($senddata);
         $appointment->save();
 
         Session::flash('sa-success', 'appointment Added Successfully !!!');
@@ -158,6 +188,7 @@ class AppointmentController extends Controller
         $data['subject'] = $request['subject'];
         $data['body'] = $request['body'];
         $data['attachedFile'] = $request['attachedFile'];
+        $data['meetingDetails'] = $request['meetingDetails'];
 
         dispatch(new SendMailJob($data));
         return true;

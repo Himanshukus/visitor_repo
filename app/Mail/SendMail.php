@@ -9,6 +9,8 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Attachment;
+use Carbon\Carbon;
+
 class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -19,20 +21,62 @@ class SendMail extends Mailable
     public $subject;
     public $body;
     public $attachedFile;
-    public function __construct($subject, $body, $attachedFile = null)
+    public $meetingDetails;
+
+    public function __construct($subject, $body, $attachedFile = null, $meetingDetails = null)
     {
         $this->subject = $subject;
         $this->body = $body;
         $this->attachedFile = $attachedFile;
+        $this->meetingDetails = $meetingDetails;
     }
     /**
      * Build the message.
      */
     public function build()
     {
-        return $this->subject($this->subject)
+        // return $this->subject($this->subject)
+        //     ->view('sendmail')
+        //     ->with(['body' => $this->body]);
+        $email = $this->subject($this->subject)
             ->view('sendmail')
             ->with(['body' => $this->body]);
+
+        // Attach file if provided
+        if ($this->attachedFile) {
+            $email->attach($this->attachedFile);
+        }
+
+        // Generate and attach ICS file if meeting details are provided
+        if ($this->meetingDetails) {
+            $icsContent = $this->generateIcs();
+            $email->attachData($icsContent, 'meeting.ics', [
+                'mime' => 'text/calendar',
+            ]);
+        }
+
+        return $email;
+    }
+    protected function generateIcs()
+    {
+        $dtStart = Carbon::parse($this->meetingDetails['date'] . ' ' . $this->meetingDetails['time']);
+        $dtEnd = $dtStart->copy()->addHour(); // Assuming a 1-hour meeting
+
+        $icsContent = "BEGIN:VCALENDAR\n";
+        $icsContent .= "VERSION:2.0\n";
+        $icsContent .= "PRODID:-//Your Company//Your Product//EN\n";
+        $icsContent .= "BEGIN:VEVENT\n";
+        $icsContent .= "UID:" . uniqid() . "@yourdomain.com\n";
+        $icsContent .= "DTSTAMP:" . $dtStart->format('Ymd\THis\Z') . "\n";
+        $icsContent .= "DTSTART:" . $dtStart->format('Ymd\THis\Z') . "\n";
+        $icsContent .= "DTEND:" . $dtEnd->format('Ymd\THis\Z') . "\n";
+        $icsContent .= "SUMMARY:" . $this->meetingDetails['title'] . "\n";
+        $icsContent .= "DESCRIPTION:" . $this->meetingDetails['agenda'] . "\n";
+        $icsContent .= "LOCATION:" . $this->meetingDetails['location'] . "\n";
+        $icsContent .= "END:VEVENT\n";
+        $icsContent .= "END:VCALENDAR\n";
+
+        return $icsContent;
     }
     /**
      * Get the message envelope.
@@ -40,7 +84,7 @@ class SendMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Send Mail',
+            subject: $this->subject,
         );
     }
 
@@ -61,9 +105,12 @@ class SendMail extends Mailable
      */
     public function attachments(): array
     {
-        // return [];
-        return [
-            Attachment::fromPath($this->attachedFile),
-        ];
+        $attachments = [];
+
+        if ($this->attachedFile) {
+            $attachments[] = Attachment::fromPath($this->attachedFile);
+        }
+
+        return $attachments;
     }
 }

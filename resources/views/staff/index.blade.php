@@ -75,14 +75,7 @@
                             </div>
                             <div class="row">
 
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="profile_picture" class="col-form-label">Profile Picture</label>
-                                        <input type="file" class="form-control" id="profile_picture"
-                                            name="profile_picture" value="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="date" class="col-form-label">Department</label>
                                         <div class="dropdown  mt-sm-0">
@@ -92,6 +85,23 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="profile_picture" class="col-form-label">Profile Picture</label>
+                                        <input type="file" class="form-control" id="profile_picture"
+                                            name="profile_picture" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="image_preview" class="mt-3">
+
+                                        <img id="preview_image" src="#" alt="Preview"
+                                            style="max-width: 100%; height: auto; display: none;">
+                                        <button type="button" id="remove_image" class="btn btn-sm btn-danger d-none">
+                                            <i class="fas fa-times"></i> Remove
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -161,6 +171,40 @@
         <!-- end table responsive -->
 
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var profilePictureInput = document.getElementById('profile_picture');
+            var previewImage = document.getElementById('preview_image');
+            var removeImageButton = document.getElementById('remove_image');
+
+            profilePictureInput.addEventListener('change', function() {
+                var file = this.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        previewImage.src = event.target.result;
+                        previewImage.style.display = 'block';
+                        removeImageButton.classList.remove('d-none');
+                        removeImageButton.style.display = 'inline-block';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    previewImage.src = '#';
+                    previewImage.style.display = 'none';
+                    removeImageButton.style.display = 'none';
+                }
+            });
+
+            removeImageButton.addEventListener('click', function() {
+                previewImage.src = '#';
+                previewImage.style.display = 'none';
+                removeImageButton.style.display = 'none';
+                profilePictureInput.value = '';
+            });
+
+        });
+    </script>
+
 
     <script>
         $(document).ready(function() {
@@ -268,11 +312,12 @@
                         id: id
                     },
                     success: function(data) {
-                        console.log("sdfsdfsdf", data)
+                        console.log("asdfasf", data)
                         $('#id').val(data.data.id);
                         $('#name').val(data.data.name);
                         $('#email').val(data.data.email);
                         $('#department_id').val(data.data.department_id);
+                        $('#preview_image').attr('src', data.data.profile_picture);
                     }
                 });
 

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Visitlog;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Validator;
 
 class ApiController extends Controller
@@ -64,7 +67,8 @@ class ApiController extends Controller
         }
     }
 
-    public function genrate_badge(Request $request){
+    public function genrate_badge(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'appointment_id' => 'required',
@@ -84,6 +88,66 @@ class ApiController extends Controller
             return response(['error' => false, 'msg' => 'success', 'data' => $appointment]);
         } else {
             return response()->json(['error' => true, 'msg' => 'No Appointment Found With This Appointment Id']);
+        }
+    }
+
+    public function walkinvisitor(Request $request)
+    {
+
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $errordata = [
+                'error' => true,
+                'errors' => $validator->errors(),
+                'msg' => 'All fields required'
+            ];
+            return response()->json($errordata, 200);
+        }
+
+        $appointment = new Visitor();
+
+        $appointment->name = $request->name;
+        $appointment->email = $request->email;
+
+        if ($request->has('phone')) {
+            $appointment->phone = $request->phone;
+        }
+        $today = Carbon::today()->toDateString();
+        $appointment->visit_date = $today;
+
+        if ($request->has('companyname')) {
+            $appointment->companyname = $request->companyname;
+        }
+        $appointment->type = 'single';
+        if ($request->has('purpose')) {
+            $appointment->purpose = $request->purpose;
+        }
+        $code = random_int(1000, 9999);
+        $appointment->visit_code = $code;
+
+        $appointment->save();
+
+        $visitlogs = new Visitlog();
+        $visitlogs->visitor_id = $appointment->id;
+        $visitlogs->action = 'check-in';
+        $visitlogs->entry_time = $request->entry_time;
+        $today = Carbon::today()->toDateString();
+        $appointment->date = $today;
+        $visitlogs->exit_time = $request->exit_time;
+        return response(['error' => false, 'msg' => 'success', 'data' => $appointment]);
+    }
+
+    public function getallstaff(Request $request)
+    {
+        $data = User::all();
+        if ($data) {
+            return response(['error' => false, 'msg' => 'success', 'data' => $data]);
+        } else {
+            return response(['error' => false, 'msg' => 'success', 'data' => null]);
         }
     }
 }

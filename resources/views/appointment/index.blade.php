@@ -1,7 +1,6 @@
 @extends('layouts/main')
 
 @section('content')
-   
     <div class="container-fluid">
 
         <!-- start page title -->
@@ -117,13 +116,22 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="visit_date" class="col-form-label">Appointment Date</label>
-                                        {{-- <input type="date" class="form-control" id="visit_date" name="visit_date"
-                                            value=""> --}}
-                                        <input type="text" class="form-control" id="datepicker-range" name="visit_date">
+                                        <input type="text" class="form-control" id="datepicker-range"
+                                            name="visit_date">
 
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="purpose" class="col-form-label">Purpose </label>
+                                        <select class="form-select" name="purpose" id="purpose">
+                                            @foreach ($visitorpurpose as $key => $val)
+                                                <option value="{{ $key }}">{{ $val }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +147,7 @@
 
 
         <div class="table-responsive mb-4">
-           
+
             <table class="table align-middle datatable dt-responsive table-check nowrap"
                 style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;">
                 <thead>
@@ -300,6 +308,10 @@
                         var visitDate = data.data.visit_date.split(' ')[0];
                         $('#visit_date').val(visitDate);
                         $('#email').val(data.data.email);
+                        $('#purpose').val(data.data.purpose);
+                        var purposeValue = data.data.purpose;
+                        $('#purpose').val(purposeValue); 
+                        $('#purpose').trigger('change');
                         $('#companyname').val(data.data.companyname);
                         $('#host_id').val(data.data.host_id);
                     }

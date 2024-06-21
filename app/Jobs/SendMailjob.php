@@ -21,12 +21,16 @@ class SendMailjob implements ShouldQueue
     public $subject;
     public $body;
     public $attachedFile;
+    public $meetingDetails;
+
     public function __construct($data)
     {
         $this->mail = $data['mail'];
         $this->subject = $data['subject'];
         $this->body = $data['body'];
-        $this->attachedFile = $data['attachedFile'];
+        $this->attachedFile = $data['attachedFile'] ?? null;
+        $this->meetingDetails = $data['meetingDetails'] ?? null;
+
     }
 
     /**
@@ -34,6 +38,6 @@ class SendMailjob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->mail)->send(new SendMail($this->subject, $this->body, $this->attachedFile));
+        Mail::to($this->mail)->send(new SendMail($this->subject, $this->body, $this->attachedFile,$this->meetingDetails));
     }
 }

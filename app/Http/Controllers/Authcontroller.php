@@ -19,6 +19,7 @@ class Authcontroller extends Controller
     }
     public function loginPost(Request $request)
     {
+        // print_r(Hash::make($request->password)); exit;
         $request->validate([
             'email' =>  'required',
             'password'  =>  'required'

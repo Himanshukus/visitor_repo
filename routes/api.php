@@ -23,4 +23,11 @@ Route::middleware(['checkdevice'])->group(function () {
     Route::post('visitcode', [ApiController::class, 'visitcode'])->name('visitcode');
     Route::post('takephoto', [ApiController::class, 'takephoto'])->name('takephoto');
     Route::post('genrate_badge', [ApiController::class, 'genrate_badge'])->name('genrate_badge');
+
+
+    // for walk-in visitor
+    Route::post('walkinvisitor', [ApiController::class, 'walkinvisitor'])->name('walkinvisitor');
+
+    // for getting all the staff
+    Route::get('getallstaff', [ApiController::class, 'getallstaff'])->name('getallstaff');
 });
