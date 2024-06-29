@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,9 @@ class UserController extends Controller
     {
         // echo '<pre>';
         // print_r(Auth::user()->name); exit;
-        return view('auth.profile');
+        $department = Department::all();
+
+        return view('auth.profile', compact('department'));
     }
 
     public function updateProfile(Request $request)

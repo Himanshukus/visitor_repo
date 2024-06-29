@@ -1,13 +1,12 @@
-{{-- <html>
+<html>
 <head>
     <title></title>
 </head>
 <body>
-    <p> <?php //echo $body?></p>
+    <p> <?php echo $body?></p>
 </body>
-</html> --}}
-<!DOCTYPE html>
-<!DOCTYPE html>
+</html>
+{{-- <!DOCTYPE html>
 <html>
 <head>
     <title>Meeting Invitation</title>
@@ -33,34 +32,43 @@
             border-radius: 10px 10px 0 0;
             text-align: center;
         }
+        .logo {
+            max-width: 150px; /* Adjust logo width as needed */
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
         .content {
             padding: 20px;
-        }
-        .content h1 {
             color: #333333;
         }
         .content p {
-            color: #666666;
-        }
-        .content a {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-        }
-        .content a:hover {
-            text-decoration: underline;
+            margin-bottom: 15px;
         }
         .footer {
-            text-align: center;
+            background-color: #f4f4f4;
             color: #aaaaaa;
-            font-size: 12px;
+            text-align: center;
             padding: 10px;
+            border-radius: 0 0 10px 10px;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <img class="logo" src="{{ asset('images/logo/Seser_logo_horizontal_purple.png') }}" alt="Logo">
             <h2>{{ $meetingDetails['title'] }}</h2>
         </div>
         <div class="content">
@@ -80,9 +88,10 @@
             </p>
         </div>
         <div class="footer">
-            <p>If you have any questions, please contact {{ $meetingDetails['sender_name'] }}.</p>
+            <p>If you have any questions, please contact {{ $meetingDetails['sender_name'] }} at <a href="mailto:{{ $meetingDetails['s'] }}">{{ $meetingDetails['sender_email'] }}</a>.</p>
         </div>
     </div>
 </body>
-</html>
+</html> --}}
+
 

@@ -20,6 +20,7 @@
                         <span>Appointment</span>
                     </a>
                 </li>
+                @if(Auth::user()->type == 'admin')
                 <li>
                     <a href="{{route('department')}}">
                         <i data-feather="layout"></i>
@@ -32,6 +33,13 @@
                         <span>Staff</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{route('setting')}}">
+                        <i data-feather="settings" class="icon-lg"></i>
+                        <span>Setting</span>
+                    </a>
+                </li>
+                @endif
             </ul>
         </div>
         <!-- Sidebar -->

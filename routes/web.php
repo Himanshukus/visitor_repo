@@ -4,6 +4,7 @@ use App\Http\Controllers\Authcontroller;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\MeetingResponseController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::post('/storestaff', [StaffController::class, 'store'])->name('staff.store');
     Route::get('/delete_staff', [StaffController::class, 'delete'])->name('delete_staff');
     Route::get('/getstaffByid', [StaffController::class, 'getstaffByid'])->name('getstaffByid');
+
+
+    //setting manage route
+    Route::get('/setting', [SettingController::class, 'index'])->name('setting'); 
 
     Route::post('/profile', [StaffController::class, 'profile'])->name('profile');
 });

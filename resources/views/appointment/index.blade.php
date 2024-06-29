@@ -305,8 +305,8 @@
                         $('#id').val(data.data.id);
                         $('#name').val(data.data.name);
                         $('#phone').val(data.data.phone);
-                        var visitDate = data.data.visit_date.split(' ')[0];
-                        $('#visit_date').val(visitDate);
+                        // var visitDate = data.data.visit_date.split(' ')[0];
+                        $('#datepicker-range').val(data.data.visit_date);
                         $('#email').val(data.data.email);
                         $('#purpose').val(data.data.purpose);
                         var purposeValue = data.data.purpose;

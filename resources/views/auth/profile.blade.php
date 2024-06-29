@@ -126,9 +126,12 @@
                                                 {{ session('error') }}
                                             </div>
                                         @endif
+                                        
                                         <form action="{{ route('update.profile') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
+                                            <div class="row">
+                                                <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="name" class="form-label">Name</label>
                                                 <input name="name" type="text" class="form-control" id="name"
@@ -137,7 +140,8 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
-
+                                        </div>
+                                        <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
                                                 <input name="email" type="email" id="email" class="form-control"
@@ -146,15 +150,31 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="date" class="col-form-label">Department</label>
+                                                <div class="dropdown ">
+                                                    <select class="form-select" name="department_id" id="department_id" disabled>
+                                                        @foreach ($department as $val)
+                                                        <option value="{{ $val->id }}" {{ Auth::user()->department_id == $val->id ? 'selected' : '' }}>
+                                                           {{ $val->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="imgupload" class="form-label">Upload Image</label>
                                                 <input name="imgupload" type="file" class="form-control" id="imgupload"
                                                     placeholder="">
                                             </div>
-
+                                        </div>
                                             <div class="text-center">
                                                 <button class="btn btn-success">Update Profile</button>
                                             </div>
+                                        </div>
                                         </form>
                                     </div>
                                 </div>
