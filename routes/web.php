@@ -3,6 +3,7 @@
 use App\Http\Controllers\Authcontroller;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\GroupAppointmentController;
 use App\Http\Controllers\MeetingResponseController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
@@ -23,6 +24,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [Authcontroller::class, 'login'])->name('login')->middleware('guest');
 Route::post('loginPost', [Authcontroller::class, 'loginPost'])->name('loginPost');
 
+// password recowet
+Route::get('/recoverpw', [Authcontroller::class, 'recoverpw'])->name('recoverpw');
+Route::post('/pwreset', [Authcontroller::class, 'pwreset'])->name('pwreset');
+
 Route::get('/rsvp/{meetingId}/{response}', [MeetingResponseController::class, 'respond']);
 
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
@@ -42,6 +47,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::get('/delete_appointment', [AppointmentController::class, 'delete'])->name('delete_appointment');
     Route::get('/department', [DepartmentController::class, 'index'])->name('department');
     Route::post('/store', [DepartmentController::class, 'store'])->name('department.store');
+
+    // group appointment
+    Route::get('/groupappointment', [GroupAppointmentController::class, 'index'])->name('groupappointment');
+    Route::get('/viewgrpapt/{id}', [GroupAppointmentController::class, 'viewgrpapt'])->name('viewgrpapt');
+    Route::post('/aptgroupstore', [GroupAppointmentController::class, 'groupvisitorstore'])->name('appointmentgroup.store');
 
     // staff manage route
     Route::get('/staff', [StaffController::class, 'index'])->name('staff');

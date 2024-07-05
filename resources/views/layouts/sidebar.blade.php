@@ -16,8 +16,14 @@
                 </li>
                 <li>
                     <a href="{{route('newappointment')}}">
-                        <i data-feather="users"></i>
+                        <i data-feather="user"></i>
                         <span>Appointment</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('groupappointment')}}">
+                        <i data-feather="users"></i>
+                        <span>Group Appointment</span>
                     </a>
                 </li>
                 @if(Auth::user()->type == 'admin')

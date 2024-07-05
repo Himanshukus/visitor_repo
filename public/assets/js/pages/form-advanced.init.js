@@ -58,15 +58,15 @@ File: Form advanced Js File
 //     );
 
 //     // text inputs example
-//     var textRemove = new Choices(
-//         document.getElementById('choices-text-remove-button'),
-//         {
-//             delimiter: ',',
-//             editItems: true,
-//             maxItemCount: 5,
-//             removeItemButton: true,
-//         }
-//     );
+    // var textRemove = new Choices(
+    //     document.getElementById('choices-text-remove-button'),
+    //     {
+    //         delimiter: ',',
+    //         editItems: true,
+    //         // maxItemCount: 5,
+    //         removeItemButton: true,
+    //     }
+    // );
 
 //     // choices-text-unique-values
 //     var textUniqueVals = new Choices('#choices-text-unique-values', {

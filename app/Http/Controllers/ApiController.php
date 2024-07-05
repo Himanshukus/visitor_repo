@@ -141,6 +141,28 @@ class ApiController extends Controller
         return response(['error' => false, 'msg' => 'success', 'data' => $appointment]);
     }
 
+    public function groupcheckin(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'visit_code' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $errordata = [
+                'error' => true,
+                'errors' => $validator->errors(),
+                'msg' => 'Please enter visit code'
+            ];
+            return response()->json($errordata, 200);
+        }
+
+        $appointment = Visitor::where('visit_code', $request->visit_code)->get();
+        if ($appointment) {
+
+            return response(['error' => false, 'msg' => 'visitor entry code matched', 'data' => $appointment]);
+        } else {
+            return response()->json(['error' => true, 'msg' => 'No Appointment Found With This Visit Code']);
+        }
+    }
     public function getallstaff(Request $request)
     {
         $data = User::all();

@@ -24,6 +24,9 @@ Route::middleware(['checkdevice'])->group(function () {
     Route::post('takephoto', [ApiController::class, 'takephoto'])->name('takephoto');
     Route::post('genrate_badge', [ApiController::class, 'genrate_badge'])->name('genrate_badge');
 
+    // group checkIn
+    Route::post('groupcheckin', [ApiController::class, 'groupcheckin'])->name('groupcheckin');
+
 
     // for walk-in visitor
     Route::post('walkinvisitor', [ApiController::class, 'walkinvisitor'])->name('walkinvisitor');

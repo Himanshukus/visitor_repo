@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('plainpassword');
             $table->boolean('portal_user')->default(false); 
+            $table->boolean('is_online')->default(false); 
             $table->string('profile_picture')->nullable();
             $table->string('staff_id')->unique()->nullable(); 
             $table->string('department_id')->nullable(); 

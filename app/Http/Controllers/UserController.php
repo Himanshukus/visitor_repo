@@ -68,6 +68,10 @@ class UserController extends Controller
     }
     public function logout(Request $request)
     {
+        $user = Auth::user();
+        $user = User::where('id', '=', $user->id)->update(
+            ['is_online' => false]
+        );
         Auth::logout();
         return Redirect()->route('login')->with('success', 'Logged Out Successfully...');
     }

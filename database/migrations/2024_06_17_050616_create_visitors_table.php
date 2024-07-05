@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
-            $table->string('visit_code')->unique()->nullable();
-            $table->string('qr_code')->unique()->nullable();
+            $table->string('visit_code')->nullable();
+            $table->string('qr_code')->nullable();
             $table->string('visit_date');
+            $table->string('time');
             $table->unsignedBigInteger('host_id')->nullable();
             $table->string('real_time_photo')->nullable();
             $table->string('companyname')->nullable();

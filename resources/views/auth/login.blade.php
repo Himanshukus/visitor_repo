@@ -19,223 +19,107 @@
     <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
     <title>Login</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 
 <body>
-
-        <div class="auth-page">
-            <div class="container-fluid p-0">
-                <div class="row g-0">
-                    <div class="col-xxl-3 col-lg-4 col-md-5">
-                        <div class="auth-full-page-content d-flex p-sm-5 p-4">
-                            <div class="w-100">
-                                <div class="d-flex flex-column h-100">
-
-                                    <div class="auth-content my-auto">
-                                        <div class="text-center">
-                                            <h5 class="mb-0">Welcome Back !</h5>
-                                            <p class="text-muted mt-2">Sign in to continue to .</p>
-                                        </div>
-                                        @if (session('success'))
+    <div class="auth-page">
+        <div class="container-fluid p-0 d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="row g-0 w-100">
+                <div class="col-xxl-3 col-lg-4 col-md-5 mx-auto">
+                    <div class="card shadow-lg p-sm-5 p-4">
+                        <div class="w-100">
+                            <div class="d-flex flex-column h-100">
+                                <div class="mb-4 mb-md-5 text-center">
+                                    <img src="{{ url('assets/images/logo/Seser_logo_horizontal_purple.png') }}" alt="" height="40">
+                                </div>
+                                <div class="auth-content my-auto">
+                                    <div class="text-center">
+                                        <h5 class="mb-0">Welcome Back !</h5>
+                                        <p class="text-muted mt-2">Sign in to continue to .</p>
+                                    </div>
+                                    @if (session('success'))
                                         <div class="alert alert-success">
                                             {{ session('success') }}
                                         </div>
-                                        @endif
-
-                                        @if (session('error'))
+                                    @endif
+                                    @if (session('error'))
                                         <div class="alert alert-danger">
                                             {{ session('error') }}
                                         </div>
-                                        @endif
-                                        <form class="mt-4 pt-2" action="{{route('loginPost')}}" method="post">
-                                            @csrf
-                                            <div class="mb-3">
-                                                <label class="form-label" for="email">Email</label>
-                                                <input type="text" class="form-control" id="email" placeholder="Enter email" name="email" value="">
-                                                @error('email')
+                                    @endif
+                                    <form class="mt-4 pt-2" action="{{ route('loginPost') }}" method="post">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label class="form-label" for="email">Email</label>
+                                            <input type="text" class="form-control" id="email" placeholder="Enter email" name="email" value="">
+                                            @error('email')
                                                 <p class="text-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                            <div class="mb-3">
-                                                <div class="d-flex align-items-start">
-                                                    <div class="flex-grow-1">
-                                                        <label class="form-label" for="password">Password</label>
-                                                    </div>
-                                                    <!-- <div class="flex-shrink-0">
-                                                        <div class="">
-                                                            <a href="auth-recoverpw.php" class="text-muted">Forgot password?</a>
-                                                        </div>
-                                                    </div> -->
-                                                </div>
-
-                                                <div class="input-group auth-pass-inputgroup">
-                                                    <input type="password" class="form-control" placeholder="Enter password" name="password" value="" aria-label="Password" aria-describedby="password-addon">
-
-                                                  
-                                                    <button class="btn btn-light ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline" ></i></button>
-                                                </div>
-                                                @error('password')
-                                                <p class="text-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                            {{-- <div class="row mb-4">
-                                                <div class="col">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="remember-check">
-                                                        <label class="form-check-label" for="remember-check">
-                                                            Remember me
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-                                            </div> --}}
-                                            <div class="mb-3">
-                                                <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In</button>
-                                            </div>
-                                        </form>
-
-
-
-
-                                    </div>
-                                    <div class="mt-4 mt-md-5 text-center">
-                                        <p class="mb-0">© <script>
-                                                document.write(new Date().getFullYear())
-                                            </script> with <i class="mdi mdi-heart text-danger"></i> by BeaconCoders</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end auth full page content -->
-                    </div>
-                    <!-- end col -->
-                    <div class="col-xxl-9 col-lg-8 col-md-7">
-                        <div class="auth-bg pt-md-5 p-4 d-flex">
-                            <div class="bg-overlay bg-primary"></div>
-                            <ul class="bg-bubbles">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <!-- end bubble effect -->
-                            <div class="row justify-content-center align-items-center">
-                                <div class="col-xl-7">
-                                    <div class="p-0 p-sm-4 px-xl-0">
-                                        <div id="reviewcarouselIndicators" class="carousel slide" data-bs-ride="carousel">
-                                            <div class="carousel-indicators carousel-indicators-rounded justify-content-start ms-0 mb-0">
-                                                <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                                <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                                <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                            </div>
-                                            <!-- end carouselIndicators -->
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active">
-                                                    <div class="testi-contain text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“I feel confident
-                                                            imposing change
-                                                            on myself. It's a lot more progressing fun than looking back.
-                                                            That's why
-                                                            I ultricies enim
-                                                            at malesuada nibh diam on tortor neaded to throw curve balls.”
-                                                        </h4>
-                                                        <div class="mt-4 pt-3 pb-5">
-                                                            <div class="d-flex align-items-start">
-                                                                <div class="flex-shrink-0">
-                                                                    <img src="assets/images/users/avatar-1.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
-                                                                </div>
-                                                                <div class="flex-grow-1 ms-3 mb-4">
-                                                                    <h5 class="font-size-18 text-white">Richard Drews
-                                                                    </h5>
-                                                                    <p class="mb-0 text-white-50">Web Designer</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="carousel-item">
-                                                    <div class="testi-contain text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“Our task must be to
-                                                            free ourselves by widening our circle of compassion to embrace
-                                                            all living
-                                                            creatures and
-                                                            the whole of quis consectetur nunc sit amet semper justo. nature
-                                                            and its beauty.”</h4>
-                                                        <div class="mt-4 pt-3 pb-5">
-                                                            <div class="d-flex align-items-start">
-                                                                <div class="flex-shrink-0">
-                                                                    <img src="assets/images/users/avatar-2.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
-                                                                </div>
-                                                                <div class="flex-grow-1 ms-3 mb-4">
-                                                                    <h5 class="font-size-18 text-white">Rosanna French
-                                                                    </h5>
-                                                                    <p class="mb-0 text-white-50">Web Developer</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="carousel-item">
-                                                    <div class="testi-contain text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“I've learned that
-                                                            people will forget what you said, people will forget what you
-                                                            did,
-                                                            but people will never forget
-                                                            how donec in efficitur lectus, nec lobortis metus you made them
-                                                            feel.”</h4>
-                                                        <div class="mt-4 pt-3 pb-5">
-                                                            <div class="d-flex align-items-start">
-                                                                <img src="assets/images/users/avatar-3.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
-                                                                <div class="flex-1 ms-3 mb-4">
-                                                                    <h5 class="font-size-18 text-white">Ilse R. Eaton</h5>
-                                                                    <p class="mb-0 text-white-50">Manager
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- end carousel-inner -->
+                                            @enderror
                                         </div>
-                                        <!-- end review carousel -->
-                                    </div>
+                                        <div class="mb-3">
+                                            <div class="d-flex align-items-start">
+                                                <div class="flex-grow-1">
+                                                    <label class="form-label" for="password">Password</label>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <div class="">
+                                                        <a href="{{ route('recoverpw') }}" class="text-muted">Forgot password?</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="input-group auth-pass-inputgroup">
+                                                <input type="password" class="form-control" placeholder="Enter password" name="password" value="" aria-label="Password" aria-describedby="password-addon">
+                                                <button class="btn btn-light ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                                            </div>
+                                            @error('password')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="mt-4 mt-md-5 text-center">
+                                    <p class="mb-0">©
+                                        <script>
+                                            document.write(new Date().getFullYear())
+                                        </script> with <i class="mdi mdi-heart text-danger"></i> by BeaconCoders
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end col -->
+                    <!-- end auth full page content -->
                 </div>
-                <!-- end row -->
             </div>
-            <!-- end container fluid -->
+            <!-- end row -->
         </div>
+        <!-- end container fluid -->
+    </div>
+    
 
-        <script src="assets/libs/jquery/jquery.min.js"></script>
-        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/libs/metismenu/metisMenu.min.js"></script>
-        <script src="assets/libs/simplebar/simplebar.min.js"></script>
-        <script src="assets/libs/node-waves/waves.min.js"></script>
-        <script src="assets/libs/feather-icons/feather.min.js"></script>
-        <script src="assets/libs/pace-js/pace.min.js"></script>
+    <script src="assets/libs/jquery/jquery.min.js"></script>
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/metismenu/metisMenu.min.js"></script>
+    <script src="assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="assets/libs/node-waves/waves.min.js"></script>
+    <script src="assets/libs/feather-icons/feather.min.js"></script>
+    <script src="assets/libs/pace-js/pace.min.js"></script>
 
-        <script src="assets/js/pages/pass-addon.init.js"></script>
-     
-        
+    <script src="assets/js/pages/pass-addon.init.js"></script>
+
+
 
 </body>
 

@@ -18,8 +18,11 @@ class AppointmentController extends Controller
 {
     public function dashboard()
     {
+        $data['appointment'] = Visitor::count();
+        $data['user'] = User::count();
+        $data['department'] = Department::count();
 
-        return view('dashboard');
+        return view('dashboard', compact('data'));
     }
 
     public function index()
@@ -28,9 +31,9 @@ class AppointmentController extends Controller
         $user = Auth::user();
 
         if ($user->type == 'admin') {
-            $data = Visitor::all();
+            $data = Visitor::where('type', 'single')->get();
         } else {
-            $data = $user->visitors()->get();
+            $data = $user->visitors()->where('type', 'single')->get();
         }
 
         $visitorpurpose = [
@@ -117,14 +120,17 @@ class AppointmentController extends Controller
         if ($request->has('purpose')) {
             $appointment->purpose = $request->purpose;
         }
-
-
+        if ($request->has('time')) {
+            $appointment->time = $request->time;
+        }
 
         $appointment->save();
 
         Session::flash('sa-success', 'appointment Added Successfully !!!');
         return redirect()->route('newappointment');
     }
+
+
 
     public function updateappointmentQrcodevisitCode($appointment, $request)
     {
@@ -153,7 +159,7 @@ class AppointmentController extends Controller
             $appointment->purpose = $request->purpose;
         }
 
-        if(!empty($appointment)){
+        if (!empty($appointment)) {
             $path = (array)$appointment->qr_code;
             if (isset($path[0]) && $path[0]) {
                 $image_path = public_path($path[0]);
@@ -165,9 +171,10 @@ class AppointmentController extends Controller
 
         $code = random_int(1000, 9999);
 
-        $baseUrl = 'http://127.0.0.1:8000/dashboard/appointmentdetails';
-        $url = $baseUrl . '?code=' . $code;
-        $qrCodeUrl = 'https://qrcode.tec-it.com/API/QRCode?data=' . $url;
+        // $baseUrl = 'http://127.0.0.1:8000/dashboard/appointmentdetails';
+        // $url = $baseUrl . '?code=' . $code;
+        // $qrCodeUrl = 'https://qrcode.tec-it.com/API/QRCode?data=' . $url;
+        $qrCodeUrl = 'https://qrcode.tec-it.com/API/QRCode?data=' . $code;
 
         $qrCodeContent = file_get_contents($qrCodeUrl);
 
@@ -177,6 +184,9 @@ class AppointmentController extends Controller
 
         $appointment->qr_code = $qrCodePath;
         $appointment->visit_code = $code;
+
+        $appointment->time = $request->time;
+
         $appointment->save();
 
         $senddata['meetingDetails'] = [
@@ -185,7 +195,7 @@ class AppointmentController extends Controller
             'recipient_name' => $request->name,
             'recipient_email' => $request->email,
             'date' => explode('to', $request->visit_date)[0],
-            'time' => '10:00 AM',
+            'time' => $request->time,
             'location' => 'India, Vaishali',
             'agenda' => 'Discuss project milestones and deadlines',
             'sender_name' => Auth::user()->name,

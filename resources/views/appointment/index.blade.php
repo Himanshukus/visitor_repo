@@ -61,6 +61,7 @@
                                         <label for="name" class="col-form-label">Name</label>
                                         <input type="text" class="form-control" id="name" name="name"
                                             value="">
+
                                         <input type="hidden" class="form-control" id="id" name="id"
                                             value="">
                                     </div>
@@ -107,7 +108,7 @@
                                     <div class="mb-3">
                                         <label for="type" class="col-form-label">Type</label>
                                         <div class="dropdown  mt-sm-0">
-                                            <select class="form-select" name="type">
+                                            <select class="form-select" name="type" name="apttype">
                                                 <option value="single">Single</option>
                                                 <option value="group">Group</option>
                                             </select>
@@ -125,6 +126,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="time" class="col-form-label">Appointment Time</label>
+                                        <input type="text" class="form-control flatpickr-input"
+                                            id="datepicker-timepicker" name="time">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="purpose" class="col-form-label">Purpose </label>
                                         <select class="form-select" name="purpose" id="purpose">
@@ -154,7 +163,8 @@
                     <tr>
 
                         <th scope="col">Name</th>
-                        <th scope="col">phone</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Company Name</th>
                         <th scope="col">Code</th>
                         <th scope="col">Visit Date</th>
                         <th style="width: 80px; min-width: 80px;">Action</th>
@@ -165,6 +175,7 @@
                         <tr>
                             <td>{{ $val->name }}</td>
                             <td>{{ $val->phone }}</td>
+                            <td>{{ $val->companyname }}</td>
                             <td>{{ $val->visit_code }}</td>
                             <td>{{ $val->visit_date }}</td>
                             <td>
@@ -285,6 +296,7 @@
                     }
                 });
             });
+          
 
             $('.editappointment').click(function() {
                 event.preventDefault();
@@ -309,10 +321,12 @@
                         $('#datepicker-range').val(data.data.visit_date);
                         $('#email').val(data.data.email);
                         $('#purpose').val(data.data.purpose);
+                        $('#apttype').val(data.data.type);
                         var purposeValue = data.data.purpose;
-                        $('#purpose').val(purposeValue); 
+                        $('#purpose').val(purposeValue);
                         $('#purpose').trigger('change');
                         $('#companyname').val(data.data.companyname);
+                        $('#datepicker-timepicker').val(data.data.time);
                         $('#host_id').val(data.data.host_id);
                     }
                 });

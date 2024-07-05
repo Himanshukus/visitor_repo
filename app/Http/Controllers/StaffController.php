@@ -71,8 +71,8 @@ class StaffController extends Controller
             $staff->profile_picture = $filePath;
         }
 
-        $password = random_int(1000, 9999);
-        $staff->password = Hash::make($password);
+        $staff->password = Hash::make($request->password);
+        $staff->plainpassword = $request->password;
         $staff->department_id = $request->department_id;
         $staff->portal_user = $request->has('portal_user') ? 1 : 0;
         $staff->save();
