@@ -68,6 +68,7 @@
                             <div class="mb-3">
                                 <label for="name" class="col-form-label">Name</label>
                                 <input type="text" class="form-control" id="name" name="name" value="">
+                                <input type="hidden" class="form-control" id="id" name="id" value="">
                                 @error('name')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -89,15 +90,34 @@
             style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th >Action</th>
+                    <th scope="col">S.No</th>
+                    <th>Name</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $val)
+                @foreach ($data as $key => $val)
                     <tr>
+                        <td>{{ $key + 1 }}</td>
                         <td>{{ $val->name }}</td>
-                        <td>{{ $val->name }}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
+                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bx-dots-horizontal-rounded"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item editdepartment" id="editdepartment"
+                                            data-id="{{ $val->id }}" href="" data-bs-toggle="modal"
+                                            data-bs-target="#department">
+                                            Edit
+                                        </a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ route('deletedepartment', ['id' => $val->id]) }}">Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -107,7 +127,33 @@
     <!-- end table responsive -->
 
     </div>
+    @if (Session::has('sa-success'))
+        <script>
+            Swal.fire(
+                'Success!',
+                '{{ Session::get('
+                            sa - success ') }}',
+                'success'
+            );
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+        </script>
+    @endif
 
+    @if (Session::has('sa-error'))
+        <script>
+            Swal.fire(
+                'Error!',
+                '{{ Session::get('
+                            sa - error ') }}',
+                'error'
+            );
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    @endif
 
     <script>
         $(document).ready(function() {
@@ -152,6 +198,32 @@
                         console.error('Error submitting form:', error);
                     }
                 });
+            });
+
+
+            $('.editdepartment').click(function() {
+                event.preventDefault();
+                var id = $(this).attr("data-id");
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'get',
+                    url: '{{ route('getdepartmentByid') }}',
+                    dataType: 'json',
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
+
+                        $('#id').val(data.data.id);
+                        $('#name').val(data.data.name);
+
+                    }
+                });
+
             });
         })
     </script>

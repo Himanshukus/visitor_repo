@@ -45,8 +45,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::post('/aptstore', [AppointmentController::class, 'store'])->name('appointment.store');
     Route::get('/getaptByid', [AppointmentController::class, 'getaptByid'])->name('getaptByid');
     Route::get('/delete_appointment', [AppointmentController::class, 'delete'])->name('delete_appointment');
+
+    // route for department
     Route::get('/department', [DepartmentController::class, 'index'])->name('department');
     Route::post('/store', [DepartmentController::class, 'store'])->name('department.store');
+    Route::get('/getdepartmentByid', [DepartmentController::class, 'getdepartmentByid'])->name('getdepartmentByid');
+    Route::get('/deletedepartment', [DepartmentController::class, 'deletedepartment'])->name('deletedepartment');
 
     // group appointment
     Route::get('/groupappointment', [GroupAppointmentController::class, 'index'])->name('groupappointment');

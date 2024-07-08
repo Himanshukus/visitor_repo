@@ -29,11 +29,40 @@ class DepartmentController extends Controller
             ];
             return response()->json($errordata, 200);
         }
-        $department = new Department();
+
+        if (isset($request->id) && !empty($request->id)) {
+            $department = Department::where('id', $request->id)->first();
+        } else {
+            $department = new Department();
+        }
         $department->name = $request->name;
 
         $department->save();
         Session::flash('sa-success', 'Department Added Successfully !!!');
         return redirect()->route('department');
+    }
+
+    public function getdepartmentByid(Request $request)
+    {
+
+        $apt = Department::find($request->id);
+        if ($apt) {
+            return response()->json(['error' => false, 'data' => $apt]);
+        } else {
+            return response()->json('data not found');
+        }
+    }
+    public function deletedepartment(Request $request)
+    {
+        
+        $department = Department::find($request->id);
+        if (!$department) {
+            Session::flash('sa-error', 'Department Not Found !!!');
+            return redirect()->route('department');
+        } else {
+            $department->delete();
+            Session::flash('sa-success', 'Department Added Successfully !!!');
+            return redirect()->route('department');
+        }
     }
 }

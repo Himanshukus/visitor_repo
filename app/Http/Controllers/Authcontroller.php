@@ -253,7 +253,7 @@ class Authcontroller extends Controller
             $user->save();
             return redirect()->back()->with('success', 'Please Check Your mail I just Send You a Password');
         } else {
-            echo 'something wen wrong';
+            echo 'something went wrong';
         }
     }
     function base64_encode_image($image_path)

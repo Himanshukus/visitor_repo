@@ -264,7 +264,7 @@
                             $('#staffForm')[0].reset();
                             location.reload();
                         }
-                        console.log('response', response)
+                        // console.log('response', response)
                         $('#staffForm')[0].reset();
 
                     },
