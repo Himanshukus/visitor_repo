@@ -26,7 +26,10 @@ class ApiController extends Controller
             return response()->json($errordata, 200);
         }
 
-        $appointment = Visitor::where('visit_code', $request->visit_code)->first();
+        $appointment = Visitor::where('visit_code', $request->visit_code)->with(['host' => function ($query) {
+            $query->select('id', 'name');
+        }])->first();
+        
         if ($appointment) {
 
             return response(['error' => false, 'msg' => 'visitor entry code matched', 'data' => $appointment]);
@@ -112,6 +115,9 @@ class ApiController extends Controller
 
         $appointment->name = $request->name;
         $appointment->email = $request->email;
+        $appointment->visit_date = Carbon::now();
+        $appointment->time = $request->time;
+        $appointment->host_id = $request->host_id;
 
         if ($request->has('phone')) {
             $appointment->phone = $request->phone;
@@ -134,14 +140,15 @@ class ApiController extends Controller
         $visitlogs = new Visitlog();
         $visitlogs->visitor_id = $appointment->id;
         $visitlogs->action = 'check-in';
-        $visitlogs->entry_time = $request->entry_time;
+        $visitlogs->entry_time = $request->time;
         $today = Carbon::today()->toDateString();
         $appointment->date = $today;
         $visitlogs->exit_time = $request->exit_time;
         return response(['error' => false, 'msg' => 'success', 'data' => $appointment]);
     }
 
-    public function groupcheckin(Request $request){
+    public function groupcheckin(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'visit_code' => 'required',

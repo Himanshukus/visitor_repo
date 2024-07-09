@@ -21,13 +21,14 @@ class Authcontroller extends Controller
     public function loginPost(Request $request)
     {
         // print_r(Hash::make($request->password)); exit;
+        
         $request->validate([
             'email' =>  'required',
             'password'  =>  'required'
         ]);
 
         $credentials = $request->only('email', 'password');
-
+        
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             User::where('id', '=', $user->id)->update(

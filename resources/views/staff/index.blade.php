@@ -127,7 +127,6 @@
             </div>
         </div>
 
-
         <div class="table-responsive mb-4">
 
             <table class="table align-middle datatable dt-responsive table-check nowrap"
@@ -139,12 +138,13 @@
                         <th scope="col">Email</th>
                         <th scope="col">Department</th>
                         <th scope="col">Password</th>
+                        <th scope="col">Portal User</th>
                         <th style="width: 80px; min-width: 80px;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{-- {{$data}} --}}
-                    @foreach ($data as $val)
+                    @foreach ($data as $key=>$val)
                         @php
                             if ($val->name == 'admin') {
                                 continue;
@@ -155,6 +155,12 @@
                             <td>{{ $val->email }}</td>
                             <td>{{ $val->department->name }}</td>
                             <td>{{ $val->plainpassword }}</td>
+                            <td>
+                                <input type="checkbox" class="switch" id="switch-{{ $key+1 }}" switch="none" data-user-id="{{ $val->id }}"
+                                    {{ $val->portal_user == 1 ? 'checked' : '' }} />
+                                <label for="switch-{{ $key+1 }}" data-on-label="On" data-off-label="Off"></label>
+                            </td>
+
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
@@ -290,7 +296,7 @@
                         id: id
                     },
                     success: function(data) {
-                        console.log("sdfsdfsdf", data)
+                        
                         $('#id').val(data.data.id);
                         $('#name').val(data.data.name);
                         $('#password').val(data.data.plainpassword);
@@ -306,6 +312,42 @@
 
             });
 
+            $('.switch').change(function() {
+                var isChecked = $(this).is(':checked');
+                var userId = $(this).data('user-id');
+
+                $.ajax({
+                    method: 'get',
+                    url: '{{ route('changePortalUser') }}',
+                    dataType: 'json',
+                    data: {
+                        checked: isChecked,
+                        id: userId
+                    },
+                    success: function(response) {
+                        if (response.error) {
+                            Swal.fire({
+                                title: 'Error',
+                                text: response.msg,
+                                icon: 'error'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Success',
+                                text: 'Updated Successfully',
+                                icon: 'success',
+                                timer: 3000,
+                                timerProgressBar: true,
+                            });
+                        }
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX request failed:', status, error);
+
+                    }
+                });
+            });
 
         })
     </script>

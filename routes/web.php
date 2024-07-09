@@ -62,6 +62,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::post('/storestaff', [StaffController::class, 'store'])->name('staff.store');
     Route::get('/delete_staff', [StaffController::class, 'delete'])->name('delete_staff');
     Route::get('/getstaffByid', [StaffController::class, 'getstaffByid'])->name('getstaffByid');
+    Route::get('/changePortalUser', [StaffController::class, 'changePortalUser'])->name('changePortalUser');
 
 
     //setting manage route

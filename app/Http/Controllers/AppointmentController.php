@@ -120,10 +120,15 @@ class AppointmentController extends Controller
         if ($request->has('purpose')) {
             $appointment->purpose = $request->purpose;
         }
-        if ($request->has('time')) {
-            $appointment->time = $request->time;
-        }
+        if ($request->has('totime')) {
+            $fromTime = $request->fromtime;
+            $toTime = $request->totime;
 
+            $appointmentTime = $fromTime . ' to ' . $toTime;
+
+            $appointment->time = $appointmentTime;
+        }
+        
         $appointment->save();
 
         Session::flash('sa-success', 'appointment Added Successfully !!!');
@@ -185,8 +190,15 @@ class AppointmentController extends Controller
         $appointment->qr_code = $qrCodePath;
         $appointment->visit_code = $code;
 
-        $appointment->time = $request->time;
+          if ($request->has('totime')) {
+            $fromTime = $request->fromtime;
+            $toTime = $request->totime;
 
+            $appointmentTime = $fromTime . ' to ' . $toTime;
+
+            $appointment->time = $appointmentTime;
+        }
+        
         $appointment->save();
 
         $senddata['meetingDetails'] = [

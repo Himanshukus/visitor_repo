@@ -251,3 +251,16 @@ flatpickr('#datepicker-inline', {
     inline: true,
     defaultDate: new Date()
 });
+
+flatpickr('#from-time', {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i K",
+    defaultDate: new Date()
+});
+flatpickr('#to-time', {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i K",
+    defaultDate: new Date()
+});

@@ -47,8 +47,8 @@ class GroupAppointmentController extends Controller
         $staff = User::all();
         $user = Auth::user();
 
-       $data = Visitor::where('visit_code', $id)->get();
-    //    $data = Visitor::where('visit_code', $id)->paginate(2);
+        $data = Visitor::where('visit_code', $id)->get();
+        //    $data = Visitor::where('visit_code', $id)->paginate(2);
 
         $visitorpurpose = [
             'appointment' => 'Appointment',
@@ -142,7 +142,7 @@ class GroupAppointmentController extends Controller
                         //     $emailSent = true;
                         // }
 
-                        
+
                     }
                 }
 
@@ -154,13 +154,16 @@ class GroupAppointmentController extends Controller
                 $appointment->group_name = $request->group_name;
                 $appointment->type = $request->type;
                 $appointment->purpose = $request->purpose;
-                $appointment->time = $request->time;
+                $fromTime = $request->fromtime;
+                $toTime = $request->totime;
+                $appointmentTime = $fromTime . ' to ' . $toTime;
+                $appointment->time = $appointmentTime;
                 $appointment->save();
                 // if (!$emailSent) {
                 //     $this->sendbodyemail($request, $appointment, $qrCodePath, $code);
                 //     $emailSent = true;
                 // }
-                
+
             } else {
 
                 $qrCodePath = 'uploads/qrcodes/visitor_' . $code . '.png';
@@ -191,15 +194,18 @@ class GroupAppointmentController extends Controller
                 if ($request->has('purpose')) {
                     $appointment->purpose = $request->purpose;
                 }
-                if ($request->has('time')) {
-                    $appointment->time = $request->time;
+                if ($request->has('totime')) {
+                    $fromTime = $request->fromtime;
+                    $toTime = $request->totime;
+                    $appointmentTime = $fromTime . ' to ' . $toTime;
+                    $appointment->time = $appointmentTime;
                 }
                 $appointment->save();
                 // if (!$emailSent) {
                 //     $this->sendbodyemail($request, $appointment, $qrCodePath, $code);
                 //     $emailSent = true;
                 // }
-                
+
             }
         }
 

@@ -114,14 +114,42 @@ class StaffController extends Controller
 
     public function profile(Request $request)
     {
-
-
         if ($request->has('file')) {
             $folderPath = 'uploads/profilepicture/';
             $image = $request->file;
             $fileName = uniqid() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path($folderPath), $fileName);
             $filePath = '/uploads/profilepicture/' . $fileName;
+        }
+    }
+    public function changePortalUser(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required',
+            'checked' => 'required',
+        ]);
+        $user = User::find($request->id);
+        if ($user) {
+            $portal_user = '';
+            if ($request->checked == 'true') {
+                $portal_user = 1;
+            } else {
+                $portal_user = 0;
+            }
+
+            $user->portal_user = $portal_user;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User portal status updated successfully.',
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found.',
+            ], 404);
         }
     }
 }

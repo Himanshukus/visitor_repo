@@ -61,7 +61,8 @@ class UserController extends Controller
         ]);
 
         User::whereId(Auth::user()->id)->update([
-            'password' => Hash::make($request->new_password)
+            'password' => Hash::make($request->new_password),
+            'plainpassword' => $request->new_password
         ]);
 
         return back()->with("status", "Password changed successfully!");

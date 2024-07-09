@@ -132,14 +132,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="time" class="col-form-label">Appointment Time</label>
-                                        <input type="text" class="form-control flatpickr-input"
-                                            id="datepicker-timepicker" name="time">
-
-                                    </div>
-                                </div>
+                              
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="purpose" class="col-form-label">Purpose </label>
@@ -148,6 +141,22 @@
                                                 <option value="{{ $key }}">{{ $val }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="time" class="col-form-label">Appointment From Time</label>
+                                        <input type="text" class="form-control flatpickr-input" id="from-time"
+                                            name="fromtime">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="time" class="col-form-label">Appointment To Time</label>
+                                        <input type="text" class="form-control flatpickr-input" id="to-time"
+                                            name="totime">
+
                                     </div>
                                 </div>
                             </div>
@@ -340,18 +349,16 @@
                             label: data.data.name
                         }]);
 
-                        // $('#choices-text-remove-button').val(data.data.name);
                         $('#phone').val(data.data.phone);
-                        // var visitDate = data.data.visit_date.split(' ')[0];
                         $('#datepicker-range').val(data.data.visit_date);
                         $('#email').val(data.data.email);
                         $('#purpose').val(data.data.purpose);
                         $('#apttype').val(data.data.type);
-                        // var purposeValue = data.data.purpose;
-                        // $('#purpose').val(purposeValue);
-                        // $('#purpose').trigger('change');
                         $('#companyname').val(data.data.companyname);
-                        $('#datepicker-timepicker').val(data.data.time);
+                        var appointmentTime = data.data.time;
+                        var times = appointmentTime.split(' to ');
+                        $('#from-time').val(times[0]);
+                        $('#to-time').val(times[1]);
                         $('#host_id').val(data.data.host_id);
                     }
                 });
