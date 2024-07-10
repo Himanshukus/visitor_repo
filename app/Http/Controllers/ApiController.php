@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\setting;
 use App\Models\User;
 use App\Models\Visitlog;
 use App\Models\Visitor;
@@ -176,7 +177,17 @@ class ApiController extends Controller
         if ($data) {
             return response(['error' => false, 'msg' => 'success', 'data' => $data]);
         } else {
-            return response(['error' => false, 'msg' => 'success', 'data' => null]);
+            return response(['error' => false, 'msg' => 'data not found', 'data' => null]);
+        }
+    }
+    public function settings(Request $request)
+    {
+        $data = setting::all();
+        
+        if ($data) {
+            return response(['error' => false, 'msg' => 'success', 'data' => $data]);
+        } else {
+            return response(['error' => false, 'msg' => 'data not found', 'data' => null]);
         }
     }
 }

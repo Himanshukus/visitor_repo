@@ -9,19 +9,22 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{url('assets/images/logo/Seser_logo_purple.png')}}">
+    <link rel="shortcut icon" href="{{ url('assets/images/logo/Seser_logo_purple.png') }}">
 
-    <link href="{{url('assets/libs/choices.js/public/assets/styles/choices.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/libs/choices.js/public/assets/styles/choices.min.css') }}" rel="stylesheet"
+        type="text/css" />
 
-    <link href="{{url('assets/libs/dropzone/min/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- color picker css -->
-    <link rel="stylesheet" href="{{url('assets/libs/@simonwep/pickr/themes/classic.min.css')}}" /> <!-- 'classic' theme -->
-    <link rel="stylesheet" href="{{url('assets/libs/@simonwep/pickr/themes/monolith.min.css')}}" /> <!-- 'monolith' theme -->
-    <link rel="stylesheet" href="{{url('assets/libs/@simonwep/pickr/themes/nano.min.css')}}" /> <!-- 'nano' theme -->
+    <link rel="stylesheet" href="{{ url('assets/libs/@simonwep/pickr/themes/classic.min.css') }}" />
+    <!-- 'classic' theme -->
+    <link rel="stylesheet" href="{{ url('assets/libs/@simonwep/pickr/themes/monolith.min.css') }}" />
+    <!-- 'monolith' theme -->
+    <link rel="stylesheet" href="{{ url('assets/libs/@simonwep/pickr/themes/nano.min.css') }}" /> <!-- 'nano' theme -->
 
     <!-- datepicker css -->
-    <link rel="stylesheet" href="{{url('assets/libs/flatpickr/flatpickr.min.css')}}">
+    <link rel="stylesheet" href="{{ url('assets/libs/flatpickr/flatpickr.min.css') }}">
     <!-- preloader css -->
     <link href="{{ url('assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet"
         type="text/css" />
@@ -37,6 +40,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   
 </head>
 
 <body>
@@ -68,22 +72,22 @@
     <script src="{{ url('assets/libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ url('assets/libs/feather-icons/feather.min.js') }}"></script>
     <script src="{{ url('assets/libs/pace-js/pace.min.js') }}"></script>
-    
-    
+
+
     {{-- <script src="{{url('assets/libs/dropzone/min/dropzone.min.js')}}"></script> --}}
 
 
-    <script src="{{url('assets/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
+    <script src="{{ url('assets/libs/choices.js/public/assets/scripts/choices.min.js') }}"></script>
 
     <!-- color picker js -->
-    <script src="{{url('assets/libs/@simonwep/pickr/pickr.min.js')}}"></script>
-    <script src="{{url('assets/libs/@simonwep/pickr/pickr.es5.min.js')}}"></script>
+    <script src="{{ url('assets/libs/@simonwep/pickr/pickr.min.js') }}"></script>
+    <script src="{{ url('assets/libs/@simonwep/pickr/pickr.es5.min.js') }}"></script>
 
     <!-- datepicker js -->
-    <script src="{{url('assets/libs/flatpickr/flatpickr.min.js')}}"></script>
+    <script src="{{ url('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
     <!-- init js -->
-    <script src="{{url('assets/js/pages/form-advanced.init.js')}}"></script>
+    <script src="{{ url('assets/js/pages/form-advanced.init.js') }}"></script>
     <!-- Plugins js-->
     <script src="{{ url('assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
     <script src="{{ url('assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js') }}">

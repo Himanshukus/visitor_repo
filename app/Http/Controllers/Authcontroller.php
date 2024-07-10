@@ -21,14 +21,13 @@ class Authcontroller extends Controller
     public function loginPost(Request $request)
     {
         // print_r(Hash::make($request->password)); exit;
-        
         $request->validate([
             'email' =>  'required',
             'password'  =>  'required'
         ]);
 
         $credentials = $request->only('email', 'password');
-        
+
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             User::where('id', '=', $user->id)->update(
@@ -65,181 +64,86 @@ class Authcontroller extends Controller
         $logo_path = public_path('assets/images/logo/Seser_logo_horizontal_purple.png');
         $logo_base64 = $this->base64_encode_image($logo_path);
 
-        $body = '<head>
-                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-                <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
-                <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-                <style type="text/css">
-                    @media only screen and (max-width: 550px){
-                        .responsive_at_550{
-                            width: 90% !important;
-                            max-width: 90% !important;
-                        }
-                    }
-                </style>
-            </head>
-            <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">        
-                    <tbody>
-            <tr>
-                <td align="center" bgcolor="#808080">
-                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                        <tbody>
-                            <tr>
-                                <td width="100%" align="center">
-                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                        <tbody>
-                                            <tr>
-                                                <td height="40">&nbsp;</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table width="200" border="0" cellpadding="0" cellspacing="0" align="center">
-                                        <tbody>
-                                            <tr>
-                                                <td width="100%" align="center">
-                                                    <img width="200" height="100" src="' . $logo_base64 . '" alt="Logo" border="0" style="text-align: center; background:white"/>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                        <tbody>
-                                            <tr>
-                                                <td height="40">&nbsp;</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table width="500" border="0" cellpadding="0" cellspacing="0" align="center" style="padding-left:20px; padding-right:20px;" class="responsive_at_550">
-                                        <tbody>
-                                            <tr>
-                                                <td align="center" bgcolor="#ffffff">
-                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td width="100%" height="7" align="center" border="0" bgcolor="#03a9f4"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td height="30">&nbsp;</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <table width="90%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td width="100%" align="center">
-                                                                <h1 style="font-family:\'Ubuntu Mono\', monospace; font-size:20px; color:#202020; font-weight:bold; padding-left:20px; padding-right:20px;">Password Reset</h1>
 
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <table width="90%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                                        <tbody>
-                                                           <tr>
-                                                            <td width="100%" align="center">
-                                                                <p style="font-family:\'Ubuntu\', sans-serif; font-size:14px; color:#202020; padding-left:20px; padding-right:20px; text-align:justify;">Dear ' . $user->name . ',</p>
-                                                                <p style="font-family:\'Ubuntu\', sans-serif; font-size:14px; color:#202020; padding-left:20px; padding-right:20px; text-align:justify;">Please use the following password to log in:</p>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td height="30">&nbsp;</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                 
-                                                    <table width="200" border="0" cellpadding="0" cellspacing="0" align="center">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td align="center" bgcolor="#1976D2">
-                                                                                <h2 style="font-family:\'Ubuntu Mono\', monospace; display:block; color:#ffffff; font-size:14px; font-weight:bold; text-decoration:none; padding-left:20px; padding-right:20px; padding-top:20px; padding-bottom:20px;" >' . $password . '</h2>
-                                                                            </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <table width="90%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                                        <tbody>
-                                                             <tr>
-                                                                            <td width="100%" align="center">
-                                                                                <p style="font-family:\'Ubuntu\', sans-serif; font-size:14px; color:#202020; padding-left:20px; padding-right:20px; text-align:justify;">For security reasons, we recommend changing your password after logging in.</p>
-                                                                            </td>
-                                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                   
-                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td height="30">&nbsp;</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                 
-                                                  
-                                              
-                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td height="30">&nbsp;</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                
-                                                    
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                             
-                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                        <tbody>
-                                            <tr>
-                                                <td height="40">&nbsp;</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                        <tbody>
-                                            <tr>
-                                            <td width="100%" align="center" style="padding-left:15px; padding-right:15px;">
-                                                <p style="font-family:\'Ubuntu Mono\', monospace; color:#ffffff; font-size:12px;">Beaconcoders &copy; 2024, All Rights Reserved</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td width="100%" align="center" style="padding-left:15px; padding-right:15px;">
-                                                <a href="" style="text-decoration:underline; font-family:\'Ubuntu Mono\', monospace; color:#ffffff; font-size:12px;">Terms of Use</a>
-                                                <span style="font-family:\'Ubuntu Mono\', monospace; color:#ffffff;">|</span>
-                                                <a href="" style="text-decoration:underline; font-family:\'Ubuntu Mono\', monospace; color:#ffffff; font-size:12px;">Privacy Policy</a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    
-                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-                                        <tbody>
-                                            <tr>
-                                                <td height="40">&nbsp;</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>        
-    </table>
-</body>';
+        $body = '<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Temporary Password</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 0;
+                            background-color: #f4f4f4;
+                        }
+                        .container {
+                            width: 100%;
+                            max-width: 600px;
+                            margin: 0 auto;
+                            background-color: #ffffff;
+                            padding: 20px;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                        }
+                        .header {
+                            background-color: aliceblue;
+                            color: #ffffff;
+                            padding: 10px 0;
+                            text-align: center;
+                        }
+                        .header img {
+                            width: 200px;
+                        }
+                        .content {
+                            padding: 20px;
+                            color: #333333;
+                            line-height: 1.6;
+                        }
+                        .content h2 {
+                            color: #4CAF50;
+                        }
+                        .content p {
+                            margin: 10px 0;
+                        }
+                        .temporary-password {
+                            background-color: #f1f1f1;
+                            padding: 10px;
+                            border-left: 4px solid #4CAF50;
+                            margin: 20px 0;
+                            font-size: 1.2em;
+                        }
+                        .footer {
+                            text-align: center;
+                            padding: 20px;
+                            font-size: 0.9em;
+                            color: #777777;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <img  src="' . $logo_base64 . '" alt="Company Logo">
+                        </div>
+                        <div class="content">
+                            <h2>Hello ' . $user->name . ' ,</h2>
+                            <p>We received a request to reset your password. Here is your temporary password:</p>
+                            <div class="temporary-password">
+                            ' . $password . '
+                            </div>
+                            <p>Please use this temporary password to log in and change your password immediately to ensure the security of your account.</p>
+                            <p>If you did not request a password reset, please contact our support team immediately.</p>
+                            <p>Thank you,<br>SESER</p>
+                        </div>
+                        <div class="footer">
+                            <p>&copy; 2024 SESER. All rights reserved.</p>
+                            <p> Company Address | Phone Number | <a href="mailto:support@yourcompany.com">support@yourcompany.com</a></p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                ';
 
 
         $email = $request->email;

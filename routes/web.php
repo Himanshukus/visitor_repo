@@ -67,6 +67,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     //setting manage route
     Route::get('/setting', [SettingController::class, 'index'])->name('setting'); 
+    Route::post('/settings/update', [SettingController::class, 'update'])->name('settings.update');
 
     Route::post('/profile', [StaffController::class, 'profile'])->name('profile');
 });

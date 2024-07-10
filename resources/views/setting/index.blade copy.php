@@ -26,24 +26,21 @@
                         <form method="POST" action="{{ route('settings.update') }}">
                             @csrf
                             @foreach ($data as $field)
-                            @php
-                             if($field->field_name == 'app_background'){
-                                continue;
-                             }   
-                            @endphp
                             <div class="form-check mb-3">
                                 <input class="form-check-input fieldCheckbox" type="checkbox" id="checkbox{{ $field->id }}" name="fields[{{ $field->field_name }}]" data-field="{{ $field->field_name }}" {{ $field->is_enabled ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checkbox{{ $field->id }}">{{ $field->field_name }}</label>
                             </div>
                             @endforeach
                             <h6 class="mt-4 mb-3 pt-2">Manage App Background</h6>
+
                             <div class="mb-3">
-                                <select class="form-select" name="app_background">
+                                <select class="form-select">
                                     <option>Select</option>
-                                    <option value="video" {{ $background == 'video' ? 'selected' : '' }}>Video</option>
-                                    <option value="image" {{ $background == 'image' ? 'selected' : '' }}>Image</option>
-                                    <option value="plaincolor" {{ $background == 'plaincolor' ? 'selected' : '' }}>Plain Color</option>
-                                    <option value="gradient" {{ $background == 'gradient' ? 'selected' : '' }}>Gradient</option>
+                                    <option value="video">Video</option>
+                                    <option value="image">Image</option>
+                                    <option value="plaincolor">Plain Color</option>
+                                    <option value="Gradient">Gradient</option>
+
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Save Settings</button>
@@ -57,7 +54,7 @@
                         <h3 class="card-title">Badge Preview</h3>
                         <div class="preview bg-light p-3">
                             <div class="badge" id="badgePreview">
-                                <!-- Badge fields -->
+                                <!-- Badge fields will be dynamically added/removed here -->
                             </div>
                         </div>
                     </div>
@@ -71,7 +68,8 @@
 <script>
     Swal.fire(
         'Success!',
-        '{{ Session::get('sa-success') }}',
+        '{{ Session::get('
+        sa - success ') }}',
         'success'
     );
     setTimeout(function() {
@@ -84,7 +82,8 @@
 <script>
     Swal.fire(
         'Error!',
-        '{{ Session::get('sa-error') }}',
+        '{{ Session::get('
+        sa - error ') }}',
         'error'
     );
     setTimeout(function() {
@@ -92,7 +91,6 @@
     }, 2000);
 </script>
 @endif
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const badgePreview = document.getElementById('badgePreview');
@@ -105,8 +103,8 @@
                 if (checkbox.checked) {
                     const fieldName = checkbox.getAttribute('data-field');
                     const fieldElement = document.createElement('div');
-                    fieldElement.classList.add('field', 'mb-2', 'px-2', 'py-1', 'bg-primary', 'text-white', 'rounded');
-                    fieldElement.style.fontSize = '20px'; 
+                    fieldElement.classList.add('field', 'mb-2', 'px-2', 'py-1', 'bg-primary',
+                        'text-white', 'rounded');
                     fieldElement.textContent = fieldName;
                     badgePreview.appendChild(fieldElement);
                 }
