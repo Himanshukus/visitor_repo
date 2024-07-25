@@ -6,6 +6,7 @@ use App\Models\setting;
 use App\Models\User;
 use App\Models\Visitlog;
 use App\Models\Visitor;
+use Google\Cloud\Storage\Connection\Rest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Validator;
@@ -123,6 +124,11 @@ class ApiController extends Controller
         if ($request->has('phone')) {
             $appointment->phone = $request->phone;
         }
+        if ($request->has('vis_type')) {
+            $appointment->vis_type = $request->vis_type;
+            // normal
+            //walkin
+        }
         $today = Carbon::today()->toDateString();
         $appointment->visit_date = $today;
 
@@ -177,7 +183,7 @@ class ApiController extends Controller
         if ($data) {
             return response(['error' => false, 'msg' => 'success', 'data' => $data]);
         } else {
-            return response(['error' => false, 'msg' => 'data not found', 'data' => null]);
+            return response(['error' => true, 'msg' => 'data not found', 'data' => null]);
         }
     }
     public function settings(Request $request)
@@ -187,7 +193,17 @@ class ApiController extends Controller
         if ($data) {
             return response(['error' => false, 'msg' => 'success', 'data' => $data]);
         } else {
-            return response(['error' => false, 'msg' => 'data not found', 'data' => null]);
+            return response(['error' => true, 'msg' => 'data not found', 'data' => null]);
         }
+    }
+    public function purposefield(Request $request){
+        $visitorpurpose = [
+            'appointment' => 'Appointment',
+            'interview' => 'Interview',
+            'servicecall' => 'Servicecall',
+            'clientcustomervisit' => 'Clientcustomervisit',
+        ];
+        return response(['error' => false, 'msg' => 'success', 'data' => $visitorpurpose]);
+
     }
 }

@@ -34,6 +34,8 @@ Route::middleware(['checkdevice'])->group(function () {
     // for getting all the staff
     Route::get('getallstaff', [ApiController::class, 'getallstaff'])->name('getallstaff');
 
+    Route::get('purposefield', [ApiController::class, 'purposefield'])->name('purposefield');
+
     // settings
     Route::get('settings', [ApiController::class, 'settings'])->name('settings');
 });
